@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
-from db_process import load_data_from_db
+from bd__process import load_data_from_db
 from csv_process import process_csv
 from merge_process import merge_data, load_to_db, upload_to_drive
 
