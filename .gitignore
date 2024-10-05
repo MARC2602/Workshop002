@@ -157,3 +157,4 @@ cython_debug/
 #.idea/
 
 credentials.env
+client_secrets.json
