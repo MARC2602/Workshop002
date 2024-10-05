@@ -1,8 +1,10 @@
 import pandas as pd
 
-def process_csv():
+def read_csv():
     df = pd.read_csv("../data/spotify_dataset.csv", delimiter=',')
+    return df
 
+def transform_csv(df):
     # Procesamiento de datos
     to_eliminate = ['Unnamed: 0']
     df = df.drop(columns=to_eliminate)

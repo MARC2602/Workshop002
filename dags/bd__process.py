@@ -6,7 +6,7 @@ import os
 # Cargar credenciales
 load_dotenv("../credentials.env")  # Aquí van las credenciales para tu base de datos
 
-def load_data_from_db():
+def read_db():
     db_username = os.getenv("DB_USERNAME")
     db_password = os.getenv("DB_PASSWORD")
     db_host = os.getenv("DB_HOST")
@@ -18,6 +18,9 @@ def load_data_from_db():
     query = "SELECT * FROM clean_awards"
     df = pd.read_sql_query(query, engine)
 
+    return df
+
+def transform_db(df):
     # Procesamiento de datos
     drop_columns = ['img', 'winner']
     df = df.drop(columns=drop_columns)
@@ -38,18 +41,3 @@ def load_data_from_db():
     df = df.rename(columns={'artist': 'artists', 'nominee': 'track_name'})
 
     return df
-
-def save_to_db(df):
-    db_username = os.getenv("DB_USERNAME")
-    db_password = os.getenv("DB_PASSWORD")
-    db_host = os.getenv("DB_HOST")
-    db_port = os.getenv("DB_PORT")
-    db_name = os.getenv("DB_NAME")
-
-    engine = create_engine(f"postgresql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}")
-
-    try:
-        df.to_sql("clean_awards", engine, if_exists="replace", index=False)
-        print("Successful migration")
-    except Exception as e:
-        print(f"Error in migration: {e}")
